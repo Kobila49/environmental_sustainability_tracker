@@ -26,16 +26,14 @@ public class CorsFilterConfig {
 
 
     @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
-        final var config = new CorsConfiguration();
-        final var source = new UrlBasedCorsConfigurationSource();
-
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistration() {
+        CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-
         config.setAllowedOrigins(allowedOrigins);
-        config.setAllowedHeaders(allowedHeaders);
         config.setAllowedMethods(allowedMethods);
+        config.setAllowedHeaders(allowedHeaders);
 
+        final var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration(CORS_BASE_PATTERN, config);
 
         final var bean = new FilterRegistrationBean<>(new CorsFilter(source));

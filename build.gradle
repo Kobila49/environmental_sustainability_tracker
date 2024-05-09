@@ -8,7 +8,7 @@ group = 'igor.kos'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '22'
+    sourceCompatibility = '21'
 }
 
 configurations {
@@ -26,7 +26,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
+
+    implementation 'org.postgresql:postgresql'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
