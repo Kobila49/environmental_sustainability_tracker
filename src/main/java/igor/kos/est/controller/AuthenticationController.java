@@ -1,11 +1,11 @@
 package igor.kos.est.controller;
 
-import igor.kos.est.dto.LoginResponse;
-import igor.kos.est.dto.LoginUserDTO;
-import igor.kos.est.dto.RegisterUserDTO;
+import igor.kos.est.dto.response.LoginResponse;
+import igor.kos.est.dto.request.LoginUserRequest;
+import igor.kos.est.dto.request.RegisterUserRequest;
 import igor.kos.est.entity.User;
-import igor.kos.est.service.AuthenticationService;
-import igor.kos.est.service.JwtService;
+import igor.kos.est.service.implementation.AuthenticationService;
+import igor.kos.est.service.implementation.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,14 +25,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDTO registerUserDto) {
+    public ResponseEntity<User> register(@RequestBody RegisterUserRequest registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
 
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDto) {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserRequest loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

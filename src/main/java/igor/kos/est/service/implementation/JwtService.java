@@ -1,4 +1,4 @@
-package igor.kos.est.service;
+package igor.kos.est.service.implementation;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

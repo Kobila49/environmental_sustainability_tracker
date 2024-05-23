@@ -1,6 +1,6 @@
 package igor.kos.est.config;
 
-import igor.kos.est.service.JwtService;
+import igor.kos.est.service.implementation.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
