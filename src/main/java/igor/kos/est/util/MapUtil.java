@@ -14,6 +14,7 @@ public class MapUtil {
                 .firstName(registeredUser.getFirstName())
                 .lastName(registeredUser.getLastName())
                 .email(registeredUser.getEmail())
+                .dateOfBirth(registeredUser.getDateOfBirth())
                 .role(registeredUser.getRole().name())
                 .build();
     }

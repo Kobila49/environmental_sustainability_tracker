@@ -2,7 +2,7 @@ package igor.kos.est.controller;
 
 import igor.kos.est.dto.request.LoginUserRequest;
 import igor.kos.est.dto.request.RefreshTokenRequest;
-import igor.kos.est.dto.request.RegisterUserRequest;
+import igor.kos.est.dto.request.UserDataRequest;
 import igor.kos.est.dto.response.JwtResponse;
 import igor.kos.est.dto.response.UserResponse;
 import igor.kos.est.entity.RefreshToken;
@@ -35,7 +35,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterUserRequest registerUserDto) {
+    public ResponseEntity<UserResponse> register(@RequestBody UserDataRequest registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
         return ResponseEntity.ok(getUserResponse(registeredUser));
     }
