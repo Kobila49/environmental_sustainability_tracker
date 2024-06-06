@@ -1,5 +1,6 @@
-insert into users (id, email, first_name, last_name, password, created_at, updated_at)
-values (1, 'ikos1801@gmail.com', 'Igor', 'Kos', '$2a$10$BDfCgW1h2SM1RRKYymnohu5T.bU0/uqcgK3dtaz9L7nwyn3bkhHm2', now(),
+insert into users (id, email, first_name, last_name, date_of_birth, password, role, created_at, updated_at)
+values (1, 'ikos1801@gmail.com', 'Igor', 'Kos', '1993-01-18',
+        '$2a$10$BDfCgW1h2SM1RRKYymnohu5T.bU0/uqcgK3dtaz9L7nwyn3bkhHm2', 'ADMIN', now(),
         now());
 
 insert into food (id, name, emission_factor, category, created_at, updated_at)

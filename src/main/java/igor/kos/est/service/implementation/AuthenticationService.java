@@ -3,7 +3,9 @@ package igor.kos.est.service.implementation;
 import igor.kos.est.dto.request.LoginUserRequest;
 import igor.kos.est.dto.request.RegisterUserRequest;
 import igor.kos.est.entity.User;
+import igor.kos.est.enums.Role;
 import igor.kos.est.exceptions.NoEntityFoundException;
+import igor.kos.est.exceptions.UserAlreadyExistsException;
 import igor.kos.est.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,9 @@ public class AuthenticationService {
 
     public User signup(RegisterUserRequest input) {
         log.info("Registering new user with email: {}", input.email());
+        if (userRepository.existsByEmail(input.email())) {
+            throw new UserAlreadyExistsException(STR."User with email \{input.email()} already exists.");
+        }
         User user = createUser(input);
         User savedUser = userRepository.save(user);
         log.info("User registered successfully with email: {}", savedUser.getEmail());
@@ -48,6 +53,8 @@ public class AuthenticationService {
                 .firstName(input.firstName())
                 .lastName(input.lastName())
                 .email(input.email())
+                .dateOfBirth(input.dateOfBirth())
+                .role(Role.USER)
                 .password(passwordEncoder.encode(input.password()))
                 .build();
     }
