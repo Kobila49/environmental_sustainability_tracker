@@ -14,6 +14,10 @@ public class TestUtil {
     private TestUtil() {
     }
 
+    public static FoodEmissionRequest getMockFoodEmissionRequest() {
+        return new FoodEmissionRequest(1L, new BigDecimal("1.5"));
+    }
+
     public static DailyEmissionRequest getMockDailyEmissionRequest() {
         return new DailyEmissionRequest(LocalDate.now(),
                 List.of(new TransportationEmissionRequest(1L, new BigDecimal("22"))),
@@ -115,5 +119,15 @@ public class TestUtil {
         final var list = new ArrayList<UtilityEmission>();
         list.add(getMockUtilityEmission());
         return list;
+    }
+
+    public static Food getMockFood() {
+        final var food = Food.builder()
+                .name("Apple")
+                .category("Fruit")
+                .emissionFactor(new BigDecimal("2.0"))
+                .build();
+        food.setId(1L);
+        return food;
     }
 }
