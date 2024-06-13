@@ -2,10 +2,7 @@ package igor.kos.est.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,6 +17,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@ToString(exclude = {"foodEmissions", "transportationEmissions", "utilityEmissions"})
 public class DailyEmission extends BaseEntity {
 
     @NotNull(message = "Emission date is mandatory")

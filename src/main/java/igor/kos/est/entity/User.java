@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"password"})
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false)
