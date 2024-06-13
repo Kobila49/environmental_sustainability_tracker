@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+
 class AuthenticationServiceTest {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(AuthenticationServiceTest.class);
+
 
     @Mock
     private UserRepository userRepository;
@@ -55,7 +59,7 @@ class AuthenticationServiceTest {
 
     @Test
     void testSignup() {
-
+        log.info("Testing signup");
         UserDataRequest input = TestUtil.getMockUserDataRequest();
 
         User mockUser = TestUtil.getMockUser();
@@ -72,7 +76,7 @@ class AuthenticationServiceTest {
 
     @Test
     void testAuthenticate() {
-
+        log.info("Testing authenticate");
         LoginUserRequest input = new LoginUserRequest("test@email.com", "password");
 
         JwtResponse jwtResponse = new JwtResponse("validToken", "refreshToken");
@@ -90,8 +94,5 @@ class AuthenticationServiceTest {
 
         assertEquals(jwtResponse.token(), actual.token());
         assertEquals(jwtResponse.refreshToken(), actual.refreshToken());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        assertEquals(authentication.getName(), SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

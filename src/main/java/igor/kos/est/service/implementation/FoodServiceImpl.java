@@ -85,7 +85,7 @@ public class FoodServiceImpl implements FoodService {
         food.setCategory(foodRequest.category());
     }
 
-    private FoodResponse mapToFoodResponse(Food food) {
+    public FoodResponse mapToFoodResponse(Food food) {
         return new FoodResponse(food.getId(), food.getName(), food.getEmissionFactor(), food.getCategory());
     }
 }
