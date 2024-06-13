@@ -1,10 +1,12 @@
 package igor.kos.est.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -20,8 +22,5 @@ public class Transportation extends BaseEntity {
     private String name;
 
     @Column(name = "emission_factor", nullable = false)
-    private Double emissionFactor;
-
-    @OneToMany(mappedBy = "transportation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TransportationEmission> transportationEmissions;
+    private BigDecimal emissionFactor;
 }

@@ -65,7 +65,8 @@ public class TransportationServiceImpl implements TransportationService {
         repository.deleteById(id);
     }
 
-    private Transportation getTransportation(Long id) {
+    @Override
+    public Transportation getTransportation(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NoEntityFoundException(STR."Transportation not found with id: \{id}"));
     }

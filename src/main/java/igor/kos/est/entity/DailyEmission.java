@@ -2,18 +2,24 @@ package igor.kos.est.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "daily_emission")
+@Table(name = "daily_emission", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "emission_date"})
+})
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class DailyEmission extends BaseEntity {
 
     @NotNull(message = "Emission date is mandatory")
@@ -22,25 +28,22 @@ public class DailyEmission extends BaseEntity {
 
     @NotNull(message = "Total emission is mandatory")
     @Column(name = "total_emission", nullable = false)
-    private Double totalEmission;
+    private BigDecimal totalEmission;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "food_emission_id")
-    private FoodEmission foodEmission;
+    @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FoodEmission> foodEmissions = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "transportation_emission_id")
-    private TransportationEmission transportationEmission;
+    @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TransportationEmission> transportationEmissions = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "daily_emission_utility_emission",
-            joinColumns = @JoinColumn(name = "daily_emission_id"),
-            inverseJoinColumns = @JoinColumn(name = "utility_emission_id")
-    )
-    private List<UtilityEmission> utilityEmissions;
+    @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UtilityEmission> utilityEmissions = new ArrayList<>();
+
+    public DailyEmission() {
+        this.totalEmission = BigDecimal.ZERO;
+    }
 }

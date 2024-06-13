@@ -1,12 +1,14 @@
 package igor.kos.est.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -24,11 +26,8 @@ public class Food extends BaseEntity {
     @Column(name = "emission_factor", nullable = false)
     @NotNull(message = "Emission factor is mandatory")
     @Min(value = 0, message = "Emission factor must be positive")
-    private Double emissionFactor;
+    private BigDecimal emissionFactor;
 
     @Column(name = "category")
     private String category;
-
-    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FoodEmission> foodEmissions;
 }

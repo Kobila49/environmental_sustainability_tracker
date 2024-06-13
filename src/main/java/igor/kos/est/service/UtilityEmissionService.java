@@ -1,15 +1,20 @@
 package igor.kos.est.service;
 
-import igor.kos.est.dto.request.TransportationEmissionRequest;
-import igor.kos.est.entity.TransportationEmission;
+import igor.kos.est.dto.request.UtilityEmissionRequest;
+import igor.kos.est.entity.DailyEmission;
+import igor.kos.est.entity.UtilityEmission;
 
 public interface UtilityEmissionService {
 
-    TransportationEmission findById(Long id);
+    UtilityEmission findById(Long id);
 
-    TransportationEmission save(TransportationEmissionRequest request);
+    UtilityEmission save(UtilityEmissionRequest request);
 
-    TransportationEmission update(TransportationEmissionRequest foodEmission, Long id);
+    UtilityEmission save(UtilityEmissionRequest request, DailyEmission dailyEmission);
+
+    UtilityEmission update(UtilityEmissionRequest request, Long id);
 
     void delete(Long id);
+
+    UtilityEmissionRequest toRequest(UtilityEmission utilityEmission);
 }

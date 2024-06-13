@@ -2,6 +2,7 @@ package igor.kos.est.service;
 
 import igor.kos.est.dto.request.TransportationRequest;
 import igor.kos.est.dto.response.TransportationResponse;
+import igor.kos.est.entity.Transportation;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface TransportationService {
     TransportationResponse updateTransportation(TransportationRequest transportation, Long id);
 
     void deleteTransportation(Long id);
+
+    Transportation getTransportation(Long id);
+
 }

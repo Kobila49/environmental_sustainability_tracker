@@ -12,9 +12,9 @@ public interface FoodService {
 
     FoodResponse findById(Long id);
 
-    FoodResponse save(FoodRequest food);
+    FoodResponse save(FoodRequest request);
 
-    FoodResponse update(FoodRequest food, Long id);
+    FoodResponse update(FoodRequest request, Long id);
 
     void delete(Long id);
 

@@ -2,9 +2,11 @@ package igor.kos.est.dto.response;
 
 import igor.kos.est.enums.UtilityType;
 
+import java.math.BigDecimal;
+
 public record UtilityResponse(
         Long id,
-        Double emissionFactor,
+        BigDecimal emissionFactor,
         UtilityType type,
         String measurementUnit
 ) {

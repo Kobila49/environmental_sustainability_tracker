@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(NoEntityFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleNoEntityFoundException(NoEntityFoundException ex) {
+        ApiResponse<String> response = new ApiResponse<>(false, ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

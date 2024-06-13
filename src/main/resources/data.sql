@@ -26,7 +26,8 @@ values (1, 'Car - Diesel', 0.192, now(), now()),
 
 insert into utility(id, type, emission_factor, measurement_unit, created_at, updated_at)
 values (1, 'ELECTRICITY', 0.527, 'kWh', now(), now()),
-       (2, 'NATURAL_GAS', 1.99, 'm3', now(), now());
+       (2, 'NATURAL_GAS', 1.99, 'm3', now(), now()),
+       (3, 'WASTE', 0.49, 'kg', now(), now());
 
 SELECT setval('users_id_seq', 1, true);
 SELECT setval('transportation_id_seq', 7, true);

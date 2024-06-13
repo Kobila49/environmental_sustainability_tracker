@@ -1,9 +1,11 @@
 package igor.kos.est.dto.response;
 
+import java.math.BigDecimal;
+
 public record FoodResponse(
         Long id,
         String name,
-        Double emissionFactor,
+        BigDecimal emissionFactor,
         String category
 ) {
 }

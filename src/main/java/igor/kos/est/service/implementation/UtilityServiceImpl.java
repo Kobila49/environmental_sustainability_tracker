@@ -61,7 +61,8 @@ public class UtilityServiceImpl implements UtilityService {
         repository.deleteById(id);
     }
 
-    private Utility getUtility(Long id) {
+    @Override
+    public Utility getUtility(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NoEntityFoundException(STR."Utility not found with id: \{id}"));
     }

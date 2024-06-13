@@ -1,6 +1,7 @@
 package igor.kos.est.service.implementation;
 
 import igor.kos.est.dto.request.FoodEmissionRequest;
+import igor.kos.est.entity.DailyEmission;
 import igor.kos.est.entity.Food;
 import igor.kos.est.entity.FoodEmission;
 import igor.kos.est.exceptions.NoEntityFoundException;
@@ -10,10 +11,7 @@ import igor.kos.est.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
-
-import static java.lang.StringTemplate.STR;
 
 @Service
 @RequiredArgsConstructor
@@ -36,15 +34,23 @@ public class FoodEmissionServiceImpl implements FoodEmissionService {
     }
 
     @Override
+    public FoodEmission save(FoodEmissionRequest request, DailyEmission dailyEmission) {
+        Food food = foodService.getFood(request.foodId());
+        FoodEmission foodEmission = buildFoodEmission(request, food);
+        foodEmission.setDailyEmission(dailyEmission);
+        return repository.save(foodEmission);
+    }
+
+    @Override
     public FoodEmission update(FoodEmissionRequest request, Long id) {
         FoodEmission entity = getFoodEmissionById(id)
                 .orElseThrow(() -> getNoEntityFoundException(id));
 
-        if (!Objects.equals(entity.getFood().getId(), request.foodId())) {
-            Food food = foodService.getFood(request.foodId());
-            entity.setFood(food);
-        }
-
+        Food food = foodService.getFood(request.foodId());
+        final var emission = request.consumption().multiply(food.getEmissionFactor());
+        entity.setEmission(emission);
+        entity.setFoodId(food.getId());
+        entity.setEmissionFactor(food.getEmissionFactor());
         entity.setConsumptionInKg(request.consumption());
         return repository.save(entity);
     }
@@ -58,6 +64,14 @@ public class FoodEmissionServiceImpl implements FoodEmissionService {
         }
     }
 
+    @Override
+    public FoodEmissionRequest toRequest(FoodEmission foodEmission) {
+        return new FoodEmissionRequest(
+                foodEmission.getFoodId(),
+                foodEmission.getConsumptionInKg()
+        );
+    }
+
     private static NoEntityFoundException getNoEntityFoundException(Long id) {
         return new NoEntityFoundException(STR."FoodEmission not found with id \{id}");
     }
@@ -67,8 +81,11 @@ public class FoodEmissionServiceImpl implements FoodEmissionService {
     }
 
     private FoodEmission buildFoodEmission(FoodEmissionRequest request, Food food) {
+        final var emission = request.consumption().multiply(food.getEmissionFactor());
         return FoodEmission.builder()
-                .food(food)
+                .emissionFactor(food.getEmissionFactor())
+                .emission(emission)
+                .foodId(food.getId())
                 .consumptionInKg(request.consumption())
                 .build();
     }
