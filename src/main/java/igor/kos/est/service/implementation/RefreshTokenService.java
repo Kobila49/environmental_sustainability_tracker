@@ -1,5 +1,6 @@
 package igor.kos.est.service.implementation;
 
+import igor.kos.est.dto.response.JwtResponse;
 import igor.kos.est.entity.RefreshToken;
 import igor.kos.est.exceptions.RefreshTokenExpiredException;
 import igor.kos.est.repository.RefreshTokenRepository;
@@ -22,6 +23,7 @@ public class RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     public RefreshToken createOrUpdateRefreshToken(String email) {
         var user = userRepository.findByEmail(email)
@@ -47,13 +49,15 @@ public class RefreshTokenService {
         return refreshTokenRepository.findByToken(token);
     }
 
-    public RefreshToken verifyExpiration(String token) {
+    public JwtResponse getNewTokenViaRefreshToken(String token) {
         RefreshToken refreshToken = findByToken(token)
                 .orElseThrow(() -> new EntityNotFoundException(STR."Refresh token not found: %s\{token}"));
         if (refreshToken.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(refreshToken);
             throw new RefreshTokenExpiredException(STR."Refresh token is expired. Please make a new login..!\{refreshToken.getToken()}");
         }
-        return refreshToken;
+
+        String newToken = jwtService.generateToken(refreshToken.getUser());
+        return new JwtResponse(newToken, refreshToken.getToken());
     }
 }

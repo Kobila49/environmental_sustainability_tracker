@@ -2,6 +2,8 @@ package igor.kos.est.service.implementation;
 
 import igor.kos.est.dto.request.LoginUserRequest;
 import igor.kos.est.dto.request.UserDataRequest;
+import igor.kos.est.dto.response.JwtResponse;
+import igor.kos.est.entity.RefreshToken;
 import igor.kos.est.entity.User;
 import igor.kos.est.enums.Role;
 import igor.kos.est.exceptions.NoEntityFoundException;
@@ -21,6 +23,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     public User signup(UserDataRequest input) {
         log.info("Registering new user with email: {}", input.email());
@@ -33,7 +37,7 @@ public class AuthenticationService {
         return user;
     }
 
-    public User authenticate(LoginUserRequest input) {
+    public JwtResponse authenticate(LoginUserRequest input) {
         log.info("Authenticating user with email: {}", input.email());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -44,8 +48,10 @@ public class AuthenticationService {
 
         User user = userRepository.findByEmail(input.email())
                 .orElseThrow(() -> new NoEntityFoundException(STR."User not found with email: \{input.email()}"));
+        String jwtToken = jwtService.generateToken(user);
+        RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(user.getEmail());
         log.info("User authenticated successfully with email: {}", user.getEmail());
-        return user;
+        return new JwtResponse(jwtToken, refreshToken.getToken());
     }
 
     private User createUser(UserDataRequest input) {
