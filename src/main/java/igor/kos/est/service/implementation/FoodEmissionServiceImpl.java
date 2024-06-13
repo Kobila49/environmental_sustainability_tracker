@@ -27,13 +27,6 @@ public class FoodEmissionServiceImpl implements FoodEmissionService {
     }
 
     @Override
-    public FoodEmission save(FoodEmissionRequest request) {
-        Food food = foodService.getFood(request.foodId());
-        FoodEmission foodEmission = buildFoodEmission(request, food);
-        return repository.save(foodEmission);
-    }
-
-    @Override
     public FoodEmission save(FoodEmissionRequest request, DailyEmission dailyEmission) {
         Food food = foodService.getFood(request.foodId());
         FoodEmission foodEmission = buildFoodEmission(request, food);

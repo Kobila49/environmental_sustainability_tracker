@@ -26,13 +26,6 @@ public class TransportationEmissionServiceImpl implements TransportationEmission
     }
 
     @Override
-    public TransportationEmission save(TransportationEmissionRequest request) {
-        Transportation transportation = transportationService.getTransportation(request.transportationId());
-        TransportationEmission transportationEmission = buildTransportationEmission(request, transportation);
-        return repository.save(transportationEmission);
-    }
-
-    @Override
     public TransportationEmission save(TransportationEmissionRequest request, DailyEmission dailyEmission) {
         Transportation transportation = transportationService.getTransportation(request.transportationId());
         TransportationEmission transportationEmission = buildTransportationEmission(request, transportation);

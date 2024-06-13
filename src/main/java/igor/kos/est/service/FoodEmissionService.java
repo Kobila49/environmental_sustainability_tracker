@@ -8,8 +8,6 @@ public interface FoodEmissionService {
 
     FoodEmission findById(Long id);
 
-    FoodEmission save(FoodEmissionRequest request);
-
     FoodEmission save(FoodEmissionRequest request, DailyEmission dailyEmission);
 
     FoodEmission update(FoodEmissionRequest request, Long id);

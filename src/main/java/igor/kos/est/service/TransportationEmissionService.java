@@ -8,8 +8,6 @@ public interface TransportationEmissionService {
 
     TransportationEmission findById(Long id);
 
-    TransportationEmission save(TransportationEmissionRequest request);
-
     TransportationEmission save(TransportationEmissionRequest request, DailyEmission dailyEmission);
 
     TransportationEmission update(TransportationEmissionRequest request, Long id);

@@ -8,8 +8,6 @@ public interface UtilityEmissionService {
 
     UtilityEmission findById(Long id);
 
-    UtilityEmission save(UtilityEmissionRequest request);
-
     UtilityEmission save(UtilityEmissionRequest request, DailyEmission dailyEmission);
 
     UtilityEmission update(UtilityEmissionRequest request, Long id);

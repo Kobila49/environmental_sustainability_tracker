@@ -26,13 +26,6 @@ public class UtilityEmissionServiceImpl implements UtilityEmissionService {
     }
 
     @Override
-    public UtilityEmission save(UtilityEmissionRequest request) {
-        Utility utility = utilityService.getUtility(request.utilityId());
-        UtilityEmission utilityEmission = buildUtilityEmission(request, utility);
-        return repository.save(utilityEmission);
-    }
-
-    @Override
     public UtilityEmission save(UtilityEmissionRequest request, DailyEmission dailyEmission) {
         Utility utility = utilityService.getUtility(request.utilityId());
         UtilityEmission utilityEmission = buildUtilityEmission(request, utility);

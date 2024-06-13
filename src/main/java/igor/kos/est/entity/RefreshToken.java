@@ -13,11 +13,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RefreshToken {
+public class RefreshToken extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Column(nullable = false, unique = true)
     private String token;
     @Column(nullable = false)
