@@ -28,7 +28,7 @@ services:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
 
   sonarqube:
-    image: sonarqube
+    image: sonarqube:latest
     container_name: sonarqube
     networks:
       - postgres-jenkins-sonar
