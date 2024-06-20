@@ -50,20 +50,12 @@ dependencies {
     testImplementation 'com.h2database:h2'
 
 }
-tasks.named('test') {
+
+tasks.withType(Test) {
     useJUnitPlatform()
-}
-
-tasks.withType(Pmd).configureEach {
     reports {
-        xml.required = true
-        html.required = true
-    }
-}
-
-tasks.withType(Checkstyle).configureEach {
-    reports {
-        html.outputLocation = rootProject.file('reports/checkstyle/checkstyle.html')
+        junitXml.required.set(true)
+        junitXml.outputLocation.set(layout.buildDirectory.dir("test-results"))
     }
 }
 
