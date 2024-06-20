@@ -1,0 +1,45 @@
+services:
+  postgres:
+    container_name: postgres-sql
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-jenkins-sonar
+    restart: unless-stopped
+  
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    networks:
+      - postgres-jenkins-sonar
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    networks:
+      - postgres-jenkins-sonar
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_FORCEAUTHENTICATION=false
+
+networks:
+  postgres-jenkins-sonar:
+
+volumes:
+  jenkins_home:
+  postgres:
