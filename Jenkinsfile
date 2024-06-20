@@ -5,11 +5,6 @@ pipeline {
         GITHUB_TOKEN = credentials('github-token')
     }
 
-    tools {
-        jdk 'jdk21'
-        gradle 'gradle-8.7'
-    }
-
     stages {
         stage('Clone sources') {
             steps {
