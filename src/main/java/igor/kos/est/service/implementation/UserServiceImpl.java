@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.text.MessageFormat.format;
+
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     public User updateUser(UserDataRequest request, Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoEntityFoundException(STR."User not found with id: \{id}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("User not found with id: {0}", id)));
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(passwordEncoder.encode(request.password()));

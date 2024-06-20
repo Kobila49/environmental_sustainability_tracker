@@ -16,7 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static java.lang.StringTemplate.STR;
+import static java.text.MessageFormat.format;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +31,7 @@ public class AuthenticationService {
     public User signup(UserDataRequest input) {
         log.info("Registering new user with email: {}", input.email());
         if (userRepository.existsByEmail(input.email())) {
-            throw new UserAlreadyExistsException(STR."User with email \{input.email()} already exists.");
+            throw new UserAlreadyExistsException(format("User with email {0} already exists.", input.email()));
         }
         User user = createUser(input);
         User savedUser = userRepository.save(user);
@@ -49,7 +49,7 @@ public class AuthenticationService {
         );
 
         User user = userRepository.findByEmail(input.email())
-                .orElseThrow(() -> new NoEntityFoundException(STR."User not found with email: \{input.email()}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("User not found with email: {0}", input.email())));
         String jwtToken = jwtService.generateToken(user);
         RefreshToken refreshToken = refreshTokenService.createOrUpdateRefreshToken(user.getEmail());
         log.info("User authenticated successfully with email: {}", user.getEmail());

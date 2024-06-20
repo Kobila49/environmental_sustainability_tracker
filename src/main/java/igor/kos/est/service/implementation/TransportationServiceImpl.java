@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -60,7 +62,7 @@ public class TransportationServiceImpl implements TransportationService {
     public void deleteTransportation(Long id) {
         log.info("Deleting transportation record with id: {}", id);
         if (!repository.existsById(id)) {
-            throw new NoEntityFoundException(STR."Transportation not found with id: \{id}");
+            throw new NoEntityFoundException(format("Transportation not found with id: {0}", id));
         }
         repository.deleteById(id);
     }
@@ -68,7 +70,7 @@ public class TransportationServiceImpl implements TransportationService {
     @Override
     public Transportation getTransportation(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NoEntityFoundException(STR."Transportation not found with id: \{id}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("Transportation not found with id: {0}", id)));
     }
 
     private Transportation buildTransportationFromRequest(TransportationRequest request) {

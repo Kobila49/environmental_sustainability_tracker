@@ -60,7 +60,7 @@ public class FoodServiceImpl implements FoodService {
     public void delete(Long id) {
         log.info("Deleting food with id: {}", id);
         if (!repository.existsById(id)) {
-            throw new NoEntityFoundException(STR."Food not found with id: \{id}");
+            throw new NoEntityFoundException("Food not found with id: " + id);
         }
         repository.deleteById(id);
     }
@@ -68,7 +68,7 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public Food getFood(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NoEntityFoundException(STR."Food not found with id: \{id}"));
+                .orElseThrow(() -> new NoEntityFoundException("Food not found with id: " + id));
     }
 
     private Food buildFoodFromRequest(FoodRequest foodRequest) {

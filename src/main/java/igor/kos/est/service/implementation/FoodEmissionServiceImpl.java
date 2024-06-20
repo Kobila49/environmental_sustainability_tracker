@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 public class FoodEmissionServiceImpl implements FoodEmissionService {
@@ -66,7 +68,7 @@ public class FoodEmissionServiceImpl implements FoodEmissionService {
     }
 
     private static NoEntityFoundException getNoEntityFoundException(Long id) {
-        return new NoEntityFoundException(STR."FoodEmission not found with id \{id}");
+        return new NoEntityFoundException(format("FoodEmission not found with id {0}", id));
     }
 
     private Optional<FoodEmission> getFoodEmissionById(Long id) {

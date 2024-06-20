@@ -25,6 +25,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 public class EmissionServiceImpl implements EmissionService {
@@ -59,7 +61,7 @@ public class EmissionServiceImpl implements EmissionService {
         User user = getCurrentUser();
 
         DailyEmission dailyEmission = repository.findByUserIdAndEmissionDate(user.getId(), date)
-                .orElseThrow(() -> new NoEntityFoundException(STR."Daily emission not found for date: \{date}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("Daily emission not found for date: {0}", date)));
 
         return createDailyEmissionResponse(dailyEmission);
     }
@@ -134,7 +136,7 @@ public class EmissionServiceImpl implements EmissionService {
             username = principal.toString();
         }
         return userRepository.findByEmail(username)
-                .orElseThrow(() -> new NoEntityFoundException(STR."User not found with email: \{username}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("User not found with email: {0}", username)));
     }
 
     private FoodEmission saveFoodEmission(FoodEmissionRequest request, DailyEmission dailyEmission) {

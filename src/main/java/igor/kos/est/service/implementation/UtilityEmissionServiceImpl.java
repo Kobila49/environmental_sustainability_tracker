@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 public class UtilityEmissionServiceImpl implements UtilityEmissionService {
@@ -63,7 +65,7 @@ public class UtilityEmissionServiceImpl implements UtilityEmissionService {
     }
 
     private static NoEntityFoundException getNoEntityFoundException(Long id) {
-        return new NoEntityFoundException(STR."UtilityEmission not found with id \{id}");
+        return new NoEntityFoundException(format("UtilityEmission not found with id {0}", id));
     }
 
     private Optional<UtilityEmission> getUtilityEmissionById(Long id) {

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -56,7 +58,7 @@ public class UtilityServiceImpl implements UtilityService {
     public void delete(Long id) {
         log.info("Deleting utility with id: {}", id);
         if (!repository.existsById(id)) {
-            throw new NoEntityFoundException(STR."Utility not found with id: \{id}");
+            throw new NoEntityFoundException(format("Utility not found with id: {0}", id));
         }
         repository.deleteById(id);
     }
@@ -64,7 +66,7 @@ public class UtilityServiceImpl implements UtilityService {
     @Override
     public Utility getUtility(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NoEntityFoundException(STR."Utility not found with id: \{id}"));
+                .orElseThrow(() -> new NoEntityFoundException(format("Utility not found with id: {0}", id)));
     }
 
     private Utility buildUtilityFromRequest(UtilityRequest request) {

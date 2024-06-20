@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.text.MessageFormat.format;
+
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
@@ -27,7 +29,7 @@ public class RefreshTokenService {
 
     public RefreshToken createOrUpdateRefreshToken(String email) {
         var user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(STR."User not found with email: %s\{email}"));
+                .orElseThrow(() -> new EntityNotFoundException(format("User not found with email: {0}", email)));
 
         Optional<RefreshToken> existingRefreshToken = refreshTokenRepository.findByUser(user);
 
@@ -51,10 +53,10 @@ public class RefreshTokenService {
 
     public JwtResponse getNewTokenViaRefreshToken(String token) {
         RefreshToken refreshToken = findByToken(token)
-                .orElseThrow(() -> new EntityNotFoundException(STR."Refresh token not found: %s\{token}"));
+                .orElseThrow(() -> new EntityNotFoundException(format("Refresh token not found for token: {0}", token)));
         if (refreshToken.getExpiryDate().compareTo(Instant.now()) < 0) {
             refreshTokenRepository.delete(refreshToken);
-            throw new RefreshTokenExpiredException(STR."Refresh token is expired. Please make a new login..!\{refreshToken.getToken()}");
+            throw new RefreshTokenExpiredException("Refresh token is expired. Please make a new login..!");
         }
 
         String newToken = jwtService.generateToken(refreshToken.getUser());

@@ -32,12 +32,15 @@ public class DailyEmission extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FoodEmission> foodEmissions = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TransportationEmission> transportationEmissions = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyEmission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UtilityEmission> utilityEmissions = new ArrayList<>();
 
