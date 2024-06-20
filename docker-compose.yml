@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
   
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:latest-jdk21
     container_name: jenkins
     networks:
       - postgres-jenkins-sonar
@@ -36,6 +36,10 @@ services:
       - "9000:9000"
     environment:
       - SONAR_FORCEAUTHENTICATION=false
+      - SONAR_LOG_LEVEL=DEBUG
+      - SONAR_LOG_LEVEL_WEB=DEBUG
+      - SONAR_LOG_LEVEL_CE=DEBUG
+      - SONAR_LOG_LEVEL_ES=DEBUG
 
 networks:
   postgres-jenkins-sonar:
