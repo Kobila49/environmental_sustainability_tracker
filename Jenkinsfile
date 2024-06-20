@@ -25,12 +25,15 @@ pipeline {
         }
 
         stage('SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh './gradlew sonar'
+                    environment {
+                        SONAR_TOKEN = credentials('sonar-token')
+                    }
+                    steps {
+                        withSonarQubeEnv('SonarQube') {
+                            sh './gradlew sonar -Dsonar.token=$SONAR_TOKEN'
+                        }
+                    }
                 }
-            }
-        }
 
         stage('Quality gate') {
             steps {
