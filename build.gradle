@@ -51,6 +51,20 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.withType(Pmd).configureEach {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        html.outputLocation = rootProject.file('reports/checkstyle/checkstyle.html')
+    }
+}
+
+
 sonarqube {
     properties {
         property "sonar.projectKey", "est"
